@@ -321,6 +321,7 @@ export interface StepIndicatorProps {
     label: string;
     currentPosition: number;
   }): React.ReactNode;
+  finishHandle?(args: {position: number}): string
 }
 
 export default class StepIndicator extends React.Component<

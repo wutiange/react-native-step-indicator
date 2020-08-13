@@ -41,12 +41,12 @@ interface DefaultStepIndicatorStyles {
   labelColor: string;
   labelSize: number;
   labelAlign:
-    | 'center'
-    | 'flex-start'
-    | 'flex-end'
-    | 'stretch'
-    | 'baseline'
-    | undefined;
+  | 'center'
+  | 'flex-start'
+  | 'flex-end'
+  | 'stretch'
+  | 'baseline'
+  | undefined;
   currentStepLabelColor: string;
   labelFontFamily?: string;
 }
@@ -87,6 +87,7 @@ const StepIndicator = ({
   onPress,
   renderStepIndicator: renderCustomStepIndicator,
   renderLabel,
+  finishHandle
 }: StepIndicatorProps) => {
   const [width, setWidth] = React.useState<number>(0);
   const [height, setHeight] = React.useState<number>(0);
@@ -231,13 +232,13 @@ const StepIndicator = ({
           styles.stepIndicatorContainer,
           direction === 'vertical'
             ? {
-                flexDirection: 'column',
-                width: customStyles.currentStepIndicatorSize,
-              }
+              flexDirection: 'column',
+              width: customStyles.currentStepIndicatorSize,
+            }
             : {
-                flexDirection: 'row',
-                height: customStyles.currentStepIndicatorSize,
-              },
+              flexDirection: 'row',
+              height: customStyles.currentStepIndicatorSize,
+            },
         ]}
       >
         {steps}
@@ -269,19 +270,19 @@ const StepIndicator = ({
                 currentPosition,
               })
             ) : (
-              <Text
-                style={[
-                  styles.stepLabel,
-                  selectedStepLabelStyle,
-                  {
-                    fontSize: customStyles.labelSize,
-                    fontFamily: customStyles.labelFontFamily,
-                  },
-                ]}
-              >
-                {label}
-              </Text>
-            )}
+                <Text
+                  style={[
+                    styles.stepLabel,
+                    selectedStepLabelStyle,
+                    {
+                      fontSize: customStyles.labelSize,
+                      fontFamily: customStyles.labelFontFamily,
+                    },
+                  ]}
+                >
+                  {label}
+                </Text>
+              )}
           </View>
         </TouchableWithoutFeedback>
       );
@@ -370,13 +371,16 @@ const StepIndicator = ({
             stepStatus: getStepStatus(position),
           })
         ) : (
-          <Text style={indicatorLabelStyle}>{`${position + 1}`}</Text>
-        )}
+            <Text style={indicatorLabelStyle}>{`${position + 1}`}</Text>
+          )}
       </Animated.View>
     );
   };
 
   const getStepStatus = (stepPosition: number) => {
+    if (finishHandle) {
+      return finishHandle({position: stepPosition})
+    }
     if (stepPosition === currentPosition) {
       return STEP_STATUS.CURRENT;
     } else if (stepPosition < currentPosition) {
