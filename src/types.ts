@@ -222,12 +222,12 @@ export interface StepIndicatorStyles {
    *
    */
   labelAlign?:
-    | 'center'
-    | 'flex-start'
-    | 'flex-end'
-    | 'stretch'
-    | 'baseline'
-    | undefined;
+  | 'center'
+  | 'flex-start'
+  | 'flex-end'
+  | 'stretch'
+  | 'baseline'
+  | undefined;
 
   /**
    * Label fontFamily for custom fonts
@@ -321,10 +321,11 @@ export interface StepIndicatorProps {
     label: string;
     currentPosition: number;
   }): React.ReactNode;
-  finishHandle?(args: {position: number}): string
+  finishHandle?(args: { position: number }): string,
+  finishedStep?: number
 }
 
 export default class StepIndicator extends React.Component<
   StepIndicatorProps,
   {}
-> {}
+  > { }

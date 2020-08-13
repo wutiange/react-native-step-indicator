@@ -87,7 +87,8 @@ const StepIndicator = ({
   onPress,
   renderStepIndicator: renderCustomStepIndicator,
   renderLabel,
-  finishHandle
+  finishHandle,
+  finishedStep
 }: StepIndicatorProps) => {
   const [width, setWidth] = React.useState<number>(0);
   const [height, setHeight] = React.useState<number>(0);
@@ -379,7 +380,7 @@ const StepIndicator = ({
 
   const getStepStatus = (stepPosition: number) => {
     if (finishHandle) {
-      return finishHandle({position: stepPosition})
+      return finishHandle({ position: stepPosition })
     }
     if (stepPosition === currentPosition) {
       return STEP_STATUS.CURRENT;
@@ -394,7 +395,7 @@ const StepIndicator = ({
     if (position > stepCount - 1) {
       position = stepCount - 1;
     }
-    const animateToPosition = (progressBarSize / (stepCount - 1)) * position;
+    const animateToPosition = (progressBarSize / (stepCount - 1)) * (finishedStep || position);
     sizeAnim.setValue(customStyles.stepIndicatorSize);
     staleSizeAnim.setValue(customStyles.stepIndicatorSize);
     borderRadiusAnim.setValue(customStyles.stepIndicatorSize / 2);
